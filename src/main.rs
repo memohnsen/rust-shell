@@ -12,5 +12,7 @@ fn main() {
         .read_line(&mut command)
         .expect("{command}: command not found");
 
-    println!("{command}: command not found");
+    let command = command.trim();
+
+    println!("{command}: command not found")
 }
