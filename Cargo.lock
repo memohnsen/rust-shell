@@ -20,8 +20,15 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bytes",
+ "find-in-path",
  "thiserror",
 ]
+
+[[package]]
+name = "find-in-path"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "765bee8deeb63503fecb5b3e5f1565f05e8a2178b467a42430b78af9389c7598"
 
 [[package]]
 name = "proc-macro2"
