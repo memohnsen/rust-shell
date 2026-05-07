@@ -17,8 +17,8 @@ fn main() {
             break;
         } else if let Some(stripped) = command.strip_prefix("echo ") {
             println!("{stripped}");
-        } else if command == "type" {
-            println!("{command} is a shell builtin");
+        } else if let Some(stripped) = command.strip_prefix("type ") {
+            println!("{stripped} is a shell builtin");
         } else {
             println!("{command}: command not found");
         };
