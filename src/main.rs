@@ -1,4 +1,3 @@
-#[allow(unused_imports)]
 use std::io::{self, Write};
 
 fn main() {
@@ -16,8 +15,10 @@ fn main() {
 
         if command == "exit" {
             break;
-        }
-
-        println!("{command}: command not found");
+        } else if let Some(stripped) = command.strip_prefix("echo ") {
+            println!("{stripped}");
+        } else {
+            println!("{command}: command not found");
+        };
     }
 }
