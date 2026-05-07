@@ -23,7 +23,7 @@ fn main() {
             if VALID_COMMANDS.contains(&stripped_command) {
                 println!("{stripped_command} is a shell builtin");
             } else {
-                println!("{command}: command not found");
+                println!("{stripped_command}: command not found");
             }
         } else {
             println!("{command}: command not found");
