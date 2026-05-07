@@ -14,6 +14,10 @@ fn main() {
 
         let command = command.trim();
 
-        println!("{command}: command not found")
+        println!("{command}: command not found");
+
+        if command == "exit" {
+            break;
+        }
     }
 }
