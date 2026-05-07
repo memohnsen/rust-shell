@@ -3,7 +3,7 @@ use std::io::{self, Write};
 use std::path::PathBuf;
 
 fn main() {
-    const VALID_COMMANDS: [&str; 3] = ["type", "exit", "echo"];
+    // const VALID_COMMANDS: [&str; 3] = ["type", "exit", "echo"];
 
     loop {
         print!("$ ");
@@ -29,7 +29,7 @@ fn main() {
             let command_in_path: Option<PathBuf> = stripped_command.find_in_path();
 
             if let Some(path) = command_in_path {
-                println!("command is {:?}", path)
+                println!("{stripped_command} is { }", path.to_str().expect("Invalid"));
             } else {
                 println!("{stripped_command}: not found");
             }
