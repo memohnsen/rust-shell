@@ -53,7 +53,7 @@ impl Commands {
     }
 
     pub fn handle_type_command(command: &str) {
-        let valid_commands: [&str; 3] = ["type", "exit", "echo"];
+        let valid_commands: [&str; 4] = ["type", "exit", "echo", "pwd"];
         // find file or exe in path
         let command_in_path: Option<PathBuf> = command.to_string().find_in_path();
 
