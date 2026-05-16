@@ -1,5 +1,6 @@
 use find_in_path::FindInPath;
 use std::{
+    os::unix::process::CommandExt,
     path::PathBuf,
     process::{self, Command},
 };
@@ -75,6 +76,7 @@ impl Commands {
         // if exists and has execute perms, execute
         if let Some(path) = command_in_path {
             let output = Command::new(path)
+                .arg0(&command[0])
                 .args(args)
                 .output()
                 .expect("Error running program");
