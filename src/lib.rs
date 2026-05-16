@@ -1,5 +1,6 @@
 use find_in_path::FindInPath;
 use std::{
+    env,
     os::unix::process::CommandExt,
     path::PathBuf,
     process::{self, Command},
@@ -10,6 +11,7 @@ pub enum Commands {
     Exit,
     Echo(String),
     Executable(Vec<String>),
+    Pwd,
 }
 
 impl Commands {
@@ -24,6 +26,8 @@ impl Commands {
             Commands::Type(args)
         } else if input == "exit" {
             Commands::Exit
+        } else if input == "pwd" {
+            Commands::Pwd
         } else {
             let args: Vec<String> = input
                 .split_ascii_whitespace()
@@ -38,6 +42,7 @@ impl Commands {
             Commands::Type(command) => Self::handle_type_command(command),
             Commands::Echo(command) => Self::handle_echo_command(command),
             Commands::Executable(command) => Self::handle_executable_command(command),
+            Commands::Pwd => Self::handle_pwd_command(),
             Commands::Exit => process::exit(0),
         }
     }
@@ -76,14 +81,25 @@ impl Commands {
         // if exists and has execute perms, execute
         if let Some(path) = command_in_path {
             let output = Command::new(path)
+                // strips full path to just name
                 .arg0(&command[0])
+                // passes all remaining indices to args
                 .args(args)
+                // prints output of running file
                 .output()
                 .expect("Error running program");
             let output_str = String::from_utf8_lossy(&output.stdout);
+            // no ln to remove trailiing new line
             print!("{output_str}");
         } else {
             println!("{}: not found", command[0]);
+        }
+    }
+
+    pub fn handle_pwd_command() {
+        match env::current_dir() {
+            Ok(path) => println!("{}", path.display()),
+            Err(e) => println!("{e}"),
         }
     }
 }
