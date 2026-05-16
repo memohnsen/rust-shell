@@ -1,3 +1,7 @@
 pub fn execute(command: &str) {
-    println!("{command}");
+    if command.starts_with("'") {
+        println!("{}", command.trim_matches('\''));
+    } else {
+        println!("{command}");
+    }
 }
