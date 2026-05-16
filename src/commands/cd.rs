@@ -12,6 +12,6 @@ pub fn execute(command: &str) {
     let new_dir = Path::new(command);
     match env::set_current_dir(new_dir) {
         Ok(_) => (),
-        Err(_) => println!("cd: {}: No such file or directory found", new_dir.display()),
+        Err(_) => println!("cd: {}: No such file or directory", new_dir.display()),
     };
 }
