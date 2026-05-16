@@ -81,7 +81,7 @@ impl Commands {
                 .output()
                 .expect("Error running program");
             let output_str = String::from_utf8_lossy(&output.stdout);
-            println!("{output_str}");
+            print!("{output_str}");
         } else {
             println!("{}: not found", command[0]);
         }
