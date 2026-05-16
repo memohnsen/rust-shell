@@ -1,4 +1,4 @@
-use std::{env, fs, path::Path};
+use std::{env, path::Path};
 
 pub fn execute(command: &str) {
     // TODO: handle all path types:
@@ -9,10 +9,8 @@ pub fn execute(command: &str) {
     // for absolute, if dir go to dir
     // else cd: dir: No such file or directory
 
-    let current_dir = env::current_dir().unwrap();
     let new_dir = Path::new(command);
-
-    match fs::rename(current_dir, new_dir) {
+    match env::set_current_dir(new_dir) {
         Ok(_) => (),
         Err(_) => println!("cd: {}: No such file or directory found", new_dir.display()),
     };
