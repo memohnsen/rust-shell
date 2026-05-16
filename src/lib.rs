@@ -70,14 +70,12 @@ impl Commands {
         // find file or exe in path
         let command_in_path: Option<PathBuf> = command[0].find_in_path();
         let arg1 = &command[1];
-        let arg2 = &command[2];
 
         // go through every dir in path, check if file with command name exists
         // if exists and has execute perms, execute
         if let Some(path) = command_in_path {
             let output = Command::new(path)
                 .arg(arg1)
-                .arg(arg2)
                 .output()
                 .expect("Error running program");
             let output_str = String::from_utf8_lossy(&output.stdout);
