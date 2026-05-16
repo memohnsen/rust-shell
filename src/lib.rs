@@ -1,14 +1,14 @@
 use find_in_path::FindInPath;
 use std::{
     path::PathBuf,
-    process::{self, Command, ExitStatus},
+    process::{self, Command},
 };
 
 pub enum Commands {
     Type(String),
     Exit,
     Echo(String),
-    Unknown(String),
+    Executable(Vec<String>),
 }
 
 impl Commands {
@@ -24,18 +24,20 @@ impl Commands {
         } else if input == "exit" {
             Commands::Exit
         } else {
-            Commands::Unknown(input.to_string())
+            let args: Vec<String> = input
+                .split_ascii_whitespace()
+                .map(|s| s.to_string())
+                .collect();
+            Commands::Executable(args)
         }
     }
 
     pub fn execute(&self) {
-        const VALID_COMMANDS: [&str; 3] = ["type", "exit", "echo"];
-
-        match &self {
-            Commands::Type(command) => Self::handle_type_command(command, VALID_COMMANDS),
+        match self {
+            Commands::Type(command) => Self::handle_type_command(command),
             Commands::Echo(command) => Self::handle_echo_command(command),
+            Commands::Executable(command) => Self::handle_executable_command(command),
             Commands::Exit => process::exit(0),
-            Commands::Unknown(command) => println!("{command}: not found"),
         }
     }
 
@@ -44,7 +46,8 @@ impl Commands {
         println!("{command}");
     }
 
-    pub fn handle_type_command(command: &str, valid_commands: [&str; 3]) {
+    pub fn handle_type_command(command: &str) {
+        let valid_commands: [&str; 3] = ["type", "exit", "echo"];
         // find file or exe in path
         let command_in_path: Option<PathBuf> = command.to_string().find_in_path();
 
@@ -63,18 +66,24 @@ impl Commands {
         }
     }
 
-    pub fn handle_executable_command(command: &str) {
+    pub fn handle_executable_command(command: &[String]) {
         // find file or exe in path
-        let command_in_path: Option<PathBuf> = command.to_string().find_in_path();
+        let command_in_path: Option<PathBuf> = command[0].find_in_path();
+        let arg1 = &command[1];
+        let arg2 = &command[2];
 
         // go through every dir in path, check if file with command name exists
         // if exists and has execute perms, execute
         if let Some(path) = command_in_path {
-            let output = Command::new(path).arg("").arg("").output().expect("");
+            let output = Command::new(path)
+                .arg(arg1)
+                .arg(arg2)
+                .output()
+                .expect("Error running program");
             let output_str = String::from_utf8_lossy(&output.stdout);
             println!("{output_str}");
         } else {
-            println!("{command}: not found");
+            println!("{}: not found", command[0]);
         }
     }
 }
