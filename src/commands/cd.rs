@@ -13,7 +13,7 @@ pub fn execute(command: &str) {
     let new_dir = Path::new(command);
 
     match fs::rename(current_dir, new_dir) {
-        Ok(_) => println!("{}", new_dir.display()),
-        Err(_) => println!("cd: {}: No such file or directory found", new_dir.display()),
+        Ok(_) => print!("{}", new_dir.display()),
+        Err(_) => print!("cd: {}: No such file or directory found", new_dir.display()),
     };
 }
