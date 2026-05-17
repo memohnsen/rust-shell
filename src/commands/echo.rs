@@ -1,9 +1,11 @@
 pub fn execute(command: &str) {
+    let mut trimmed: String = String::new();
+
     if command.starts_with("'") {
-        let trimmed: String = command.split("'").collect();
-        println!("{}", trimmed);
+        trimmed = command.split("'").collect();
     } else {
-        let trimmed: String = command.split_whitespace().collect::<Vec<&str>>().join(" ");
-        println!("{trimmed}");
+        trimmed = command.split_whitespace().collect::<Vec<&str>>().join(" ");
     }
+
+    println!("{trimmed}");
 }
