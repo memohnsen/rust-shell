@@ -14,12 +14,14 @@ pub fn parse(input: &str) -> Command {
     } else if input.starts_with("cd ") {
         let stripped = input.strip_prefix("cd ").unwrap();
         Command::Cd(String::from(stripped))
+    } else if input.starts_with("cat ") {
+        let args: Vec<String> = input.split("'").map(|s| s.to_string()).collect();
+        Command::Executable(args)
     } else {
         let args: Vec<String> = input
             .split_ascii_whitespace()
             .map(|s| s.to_string())
             .collect();
-
         Command::Executable(args)
     }
 }
