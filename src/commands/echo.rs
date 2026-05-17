@@ -1,6 +1,7 @@
 pub fn execute(command: &str) {
     if command.starts_with("'") {
-        println!("{}", command.trim_matches('\''));
+        let trimmed: String = command.split("'").collect();
+        println!("{}", trimmed);
     } else {
         let trimmed: String = command.split_whitespace().collect::<Vec<&str>>().join(" ");
         println!("{trimmed}");
