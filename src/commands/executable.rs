@@ -15,8 +15,6 @@ pub fn execute(command: &[String]) {
             .args(args)
             .output()
             .expect("Error running program");
-        let output_str = String::from_utf8_lossy(&output.stderr);
-        print!("{output_str}");
     } else if let Some(path) = command_in_path {
         let output = Command::new(path)
             .arg0(&command[0])
