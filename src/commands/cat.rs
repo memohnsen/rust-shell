@@ -18,6 +18,6 @@ pub fn execute(command: &[String]) {
         let output_str = String::from_utf8_lossy(&output.stdout);
         print!("{output_str}");
     } else {
-        println!("{}: not found", command[0]);
+        println!("{}: not found", command[0].trim());
     }
 }
