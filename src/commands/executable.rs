@@ -10,7 +10,7 @@ pub fn execute(command: &[String]) {
     let args = &command[1..];
 
     if command.contains(&">".to_string()) || command.contains(&"1>".to_string()) {
-        let output = Command::new(&command[0])
+        Command::new(&command[0])
             .arg0(&command[0])
             .args(args)
             .output()
