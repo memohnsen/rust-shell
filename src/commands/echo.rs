@@ -1,11 +1,13 @@
-pub fn execute(command: &str) {
-    let mut trimmed: String = String::new();
+use std::{fs::File, io::Write};
 
-    if command.starts_with("'") {
-        trimmed = command.split("'").collect();
+pub fn execute(command: &[String]) {
+    if command.contains(&">".to_string()) || command.contains(&"1>".to_string()) {
+        let mut file = File::create(&command[command.len() - 1]).unwrap();
+        let output = command[1..command.len() - 2].join(" ");
+
+        file.write_all(output.as_bytes()).unwrap();
+        file.write_all(b"\n").unwrap();
     } else {
-        trimmed = command.split_whitespace().collect::<Vec<&str>>().join(" ");
+        println!("{}", command[1..].join(" "));
     }
-
-    println!("{trimmed}");
 }

@@ -11,7 +11,7 @@ pub const BUILTIN_COMMANDS: [&str; 5] = ["type", "exit", "echo", "pwd", "cd"];
 pub enum Command {
     Type(String),
     Exit,
-    Echo(String),
+    Echo(Vec<String>),
     Executable(Vec<String>),
     Pwd,
     Cd(String),
